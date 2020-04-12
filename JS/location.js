@@ -11,39 +11,41 @@ window.addEventListener('load', ()=> {
             // console.log(position);
             long = position.coords.longitude;
             lat = position.coords.latitude;
-
-            const proxy = 'https://cors.x7.workers.dev/'; //'https://cors-anywhere.herokuapp.com/';
-            const api = `${proxy}https://api.darksky.net/forecast/63590751acd2e915658812cde6acf1e4/${lat},${long}`;
-            const api2 = `${proxy}https://eu1.locationiq.com/v1/reverse.php?key=896a46365516fc&lat=${lat}&lon=${long}&format=json`; 
-            
-            fetch(api)
-            .then(response => {
-                return response.json(console.log(response));
-            })
-                .then(data =>{
-                    console.log(data);
-                    const {temperature, summary, icon} = data.currently;
-                    //set DOM elements from the API
-                    temperatureDegree.textContent = Math.round((temperature - 32) * 5/9);
-                    temperatureDescription.textContent = 'Todays forcast is '+summary;
-                    locationTimezone.textContent = 'Your current timezone is '+data.timezone;
-                    //set icon
-                    setIcons(icon, document.querySelector(".icon"));    
-            });
-
-            fetch(api2)
-            .then(response => {
-                return response.json(console.log(response));
-            })
-                .then(data =>{
-                    console.log(data);
-                    const address = data.display_name;
-                    placeLocation.textContent = 'This is the weather based on your location being '+address;
-            });
-
-
+            location(lat,long);
         });
     }
+
+    function location(lat, long){
+        const proxy = 'https://cors.x7.workers.dev/'; //'https://cors-anywhere.herokuapp.com/';
+        const api = `${proxy}https://api.darksky.net/forecast/63590751acd2e915658812cde6acf1e4/${lat},${long}`;
+        const api2 = `${proxy}https://eu1.locationiq.com/v1/reverse.php?key=896a46365516fc&lat=${lat}&lon=${long}&format=json`; 
+        
+        fetch(api)
+        .then(response => {
+            return response.json(console.log(response));
+        })
+            .then(data =>{
+                console.log(data);
+                const {temperature, summary, icon} = data.currently;
+                //set DOM elements from the API
+                temperatureDegree.textContent = Math.round((temperature - 32) * 5/9) +'C';
+                temperatureDescription.textContent = 'Todays forcast is '+summary;
+                locationTimezone.textContent = 'Your current timezone is '+data.timezone;
+                //set icon
+                setIcons(icon, document.querySelector(".icon"));    
+        });
+
+        fetch(api2)
+        .then(response => {
+            return response.json(console.log(response));
+        })
+            .then(data =>{
+                console.log(data);
+                const address = data.display_name;
+                placeLocation.textContent = 'This is the weather based on your location being '+address;
+        });
+    }
+
     function setIcons(icon, iconID){
         const skycons =  new Skycons({ color: "white" });
         const currentIcon = icon.replace(/-/g,"_").toUpperCase();
@@ -51,4 +53,3 @@ window.addEventListener('load', ()=> {
         return skycons.set(iconID, skycons[currentIcon]);
     }
 });
-//34 mins in
