@@ -31,6 +31,7 @@ window.addEventListener('load', ()=> {
                 temperatureDegree.textContent = Math.round((temperature - 32) * 5/9) +'C';
                 temperatureDescription.textContent = 'Todays forcast is '+summary;
                 locationTimezone.textContent = 'Your current timezone is '+data.timezone;
+                console.log(icon);
                 //set icon
                 setIcons(icon, document.querySelector(".icon"));    
         });
@@ -49,6 +50,7 @@ window.addEventListener('load', ()=> {
     function setIcons(icon, iconID){
         const skycons =  new Skycons({ color: "white" });
         const currentIcon = icon.replace(/-/g,"_").toUpperCase();
+        console.log(currentIcon);
         skycons.play();
         return skycons.set(iconID, skycons[currentIcon]);
     }
