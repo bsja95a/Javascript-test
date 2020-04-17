@@ -41,7 +41,8 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    background: linear-gradient(rgb(47,150,163), rgb(48,62,143));
+    /* background: linear-gradient(rgb(47,150,163), rgb(48,62,143)); */
+    background: url('../photos/weather.jpg') no-repeat center center fixed;
     font-family: sans-serif;
     color: white;
 
